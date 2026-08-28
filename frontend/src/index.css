@@ -1,0 +1,150 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: #0d1516;
+  color: #dce4e5;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light / Glacial Ice Mode Styling */
+html.light body {
+  background-color: #eef7f9;
+  color: #0d252b;
+}
+
+html.light .bg-surface {
+  background-color: #eef7f9 !important;
+}
+
+html.light .bg-surface-container-lowest {
+  background-color: #ffffff !important;
+}
+
+html.light .bg-surface-container-low {
+  background-color: #e3f2f5 !important;
+  border-color: #b0d3db !important;
+}
+
+html.light .bg-surface-container {
+  background-color: #d4ecf2 !important;
+  border-color: #9ac2cc !important;
+}
+
+html.light .bg-surface-container-high {
+  background-color: #c2e4ed !important;
+  border-color: #88b1bc !important;
+}
+
+html.light .text-ice-white {
+  color: #062329 !important;
+}
+
+html.light .text-on-surface {
+  color: #0f3038 !important;
+}
+
+html.light .text-on-surface-variant {
+  color: #3b5f67 !important;
+}
+
+html.light .border-outline-variant\/40,
+html.light .border-outline-variant\/50,
+html.light .border-outline-variant\/30 {
+  border-color: rgba(138, 185, 196, 0.4) !important;
+}
+
+/* Custom Polar Map Leaflet Tweaks */
+.leaflet-container {
+  background-color: #070d12 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+.leaflet-control-zoom {
+  border: 1px solid #3b494c !important;
+  background: rgba(21, 29, 30, 0.9) !important;
+  border-radius: 4px !important;
+  overflow: hidden;
+}
+
+.leaflet-control-zoom a {
+  background: rgba(21, 29, 30, 0.9) !important;
+  color: #c3f5ff !important;
+  border-bottom: 1px solid #3b494c !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background: #242b2d !important;
+  color: #00e5ff !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: rgba(21, 29, 30, 0.95) !important;
+  color: #dce4e5 !important;
+  border: 1px solid #00daf3 !important;
+  border-radius: 6px !important;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.7);
+}
+
+.leaflet-popup-tip {
+  background: #151d1e !important;
+  border: 1px solid #00daf3 !important;
+}
+
+/* Custom Pulse Animation */
+@keyframes radar-ping {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.9;
+  }
+  80%, 100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+.animate-radar-ping {
+  animation: radar-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: rgba(25, 33, 34, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(59, 73, 76, 0.6);
+}
+
+.glass-panel-glow {
+  background: rgba(25, 33, 34, 0.9);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 218, 243, 0.35);
+  box-shadow: 0 0 15px rgba(0, 218, 243, 0.1);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0d1516;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2e3638;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00daf3;
+}

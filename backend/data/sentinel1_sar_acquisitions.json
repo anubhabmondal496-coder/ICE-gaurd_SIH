@@ -1,0 +1,86 @@
+[
+  {
+    "pass_id": "S1A-EW-GRDM-20260828T061422",
+    "satellite": "Sentinel-1A SAR",
+    "acquisition_time_utc": "2026-08-28 06:14:22 UTC",
+    "polarization": "HH+HV (Cross-Polarization)",
+    "resolution_m": 40.0,
+    "swath_mode": "Extra Wide (EW)",
+    "bbox": [-66.0, 42.0, -62.0, 50.0],
+    "detected_targets_count": 4,
+    "targets": [
+      {
+        "target_id": "SAR-TGT-001",
+        "lat": -64.23,
+        "lon": 45.72,
+        "length_m": 17500.0,
+        "width_m": 8200.0,
+        "area_sq_km": 143.5,
+        "radar_cross_section_db": 18.4,
+        "confidence_pct": 98.6,
+        "classification": "Tabular Mega-Iceberg",
+        "matched_iceberg_id": "A76C"
+      },
+      {
+        "target_id": "SAR-TGT-002",
+        "lat": -64.12,
+        "lon": 45.95,
+        "length_m": 1200.0,
+        "width_m": 850.0,
+        "area_sq_km": 1.02,
+        "radar_cross_section_db": 12.1,
+        "confidence_pct": 91.4,
+        "classification": "Calved Fragment (Bergy Bit)",
+        "matched_iceberg_id": null
+      },
+      {
+        "target_id": "SAR-TGT-003",
+        "lat": -64.55,
+        "lon": 45.1,
+        "length_m": 3400.0,
+        "width_m": 1800.0,
+        "area_sq_km": 6.12,
+        "radar_cross_section_db": 14.8,
+        "confidence_pct": 94.2,
+        "classification": "Medium Tabular Iceberg",
+        "matched_iceberg_id": null
+      },
+      {
+        "target_id": "SAR-TGT-004",
+        "lat": -63.85,
+        "lon": 46.2,
+        "length_m": 950.0,
+        "width_m": 620.0,
+        "area_sq_km": 0.58,
+        "radar_cross_section_db": 10.5,
+        "confidence_pct": 88.7,
+        "classification": "Growler Cluster",
+        "matched_iceberg_id": null
+      }
+    ]
+  },
+  {
+    "pass_id": "S1B-IW-GRDH-20260828T075210",
+    "satellite": "Sentinel-1B SAR",
+    "acquisition_time_utc": "2026-08-28 07:52:10 UTC",
+    "polarization": "HH (Single Polarization)",
+    "resolution_m": 10.0,
+    "swath_mode": "Interferometric Wide (IW)",
+    "bbox": [-62.0, -52.0, -59.0, -45.0],
+    "detected_targets_count": 1,
+    "targets": [
+      {
+        "target_id": "SAR-TGT-010",
+        "lat": -60.85,
+        "lon": -48.3,
+        "length_m": 68000.0,
+        "width_m": 42000.0,
+        "area_sq_km": 2856.0,
+        "radar_cross_section_db": 24.2,
+        "confidence_pct": 99.9,
+        "classification": "Mega Tabular Iceberg (A23A Main)",
+        "matched_iceberg_id": "A23A"
+      }
+    ]
+  }
+]

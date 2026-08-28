@@ -1,0 +1,79 @@
+SIH_PS_26059/
+├── backend/
+│   ├── app/
+│   │   ├── __init__.py
+│   │   ├── main.py                     # FastAPI entrypoint, CORS, WebSocket telemetry hub
+│   │   ├── config.py                   # App configuration & constants
+│   │   ├── models/                     # Pydantic schema definitions
+│   │   │   ├── iceberg.py              # Iceberg, Trajectory, Drift vector models
+│   │   │   ├── vessel.py               # Vessel status, destination, telemetry
+│   │   │   ├── environment.py          # Wind, Current, Sea ice models
+│   │   │   ├── risk.py                 # CPA, TCPA, Collision probability
+│   │   │   ├── route.py                # Waypoints, Costs, Alternative routes
+│   │   │   └── satellite.py            # SAR target detection & imagery metadata
+│   │   ├── services/
+│   │   │   ├── iceberg_service.py      # Iceberg catalog & spatial indexing
+│   │   │   ├── drift_engine.py         # Physics-informed + XGBoost trajectory predictor
+│   │   │   ├── environmental_service.py# ERA5 wind, Copernicus current, NSIDC sea ice
+│   │   │   ├── risk_engine.py          # CPA/TCPA & risk score calculator
+│   │   │   ├── route_optimizer.py      # Polar multi-objective A* safe router
+│   │   │   ├── satellite_service.py    # SAR imagery analysis & target detection
+│   │   │   └── scenario_manager.py     # Pre-built realistic Antarctic scenarios
+│   │   ├── api/
+│   │   │   ├── v1/
+│   │   │   │   ├── icebergs.py
+│   │   │   │   ├── trajectory.py
+│   │   │   │   ├── environment.py
+│   │   │   │   ├── risk.py
+│   │   │   │   ├── routes.py
+│   │   │   │   ├── satellite.py
+│   │   │   │   └── scenarios.py
+│   │   └── utils/
+│   │       ├── geo_math.py             # Polar Vincenty/Haversine, Bearing, Coriolis
+│   │       └── data_generator.py       # Realistic Antarctic spatial synthetic generator
+│   ├── tests/
+│   │   ├── test_drift_engine.py
+│   │   ├── test_risk_engine.py
+│   │   └── test_route_optimizer.py
+│   ├── requirements.txt
+│   └── run.py
+│
+├── frontend/
+│   ├── index.html
+│   ├── package.json
+│   ├── vite.config.js
+│   ├── tailwind.config.js
+│   ├── src/
+│   │   ├── main.jsx
+│   │   ├── App.jsx
+│   │   ├── index.css
+│   │   ├── components/
+│   │   │   ├── Navbar.jsx              # Command Center Navigation Bar with Time & Status
+│   │   │   ├── AlertBanner.jsx         # High-risk collision alert banner
+│   │   │   ├── map/
+│   │   │   │   ├── PolarMap.jsx        # Antarctic Leaflet map with custom layer controls
+│   │   │   │   ├── IcebergLayer.jsx    # Iceberg icons, velocity vectors, uncertainty cones
+│   │   │   │   ├── VesselLayer.jsx     # Vessel marker, historical trail & active route
+│   │   │   │   ├── RouteLayer.jsx      # Original vs Recommended safe routes
+│   │   │   │   └── SeaIceLayer.jsx     # Sea ice concentration polygons / heatmap
+│   │   │   ├── panels/
+│   │   │   │   ├── VesselPanel.jsx     # INS Explorer speed, heading, ETA, coastal dest
+│   │   │   │   ├── IcebergPanel.jsx    # Selected iceberg stats, 6h/12h/24h/48h prediction
+│   │   │   │   ├── EnvironmentPanel.jsx# Current, Wind, Sea Ice mini-gauges
+│   │   │   │   ├── RiskPanel.jsx       # Risk badge (LOW/MED/HIGH), CPA, TCPA
+│   │   │   │   └── RouteAnalysisPanel.jsx # Original vs Alternative A/B risk vs distance
+│   │   │   └── views/
+│   │   │       ├── DashboardView.jsx   # Master command center
+│   │   │       ├── IcebergsView.jsx    # Searchable iceberg database & telemetry
+│   │   │       ├── PredictionView.jsx  # AI Model prediction studio & error metrics
+│   │   │       ├── RiskMapView.jsx     # Full-screen Risk zone heatmap & layers
+│   │   │       ├── RoutePlannerView.jsx# Custom route planning & alternative comparison
+│   │   │       ├── SatelliteView.jsx   # Sentinel-1 SAR detection & satellite intelligence
+│   │   │       └── DataSourcesView.jsx # USNIC, NSIDC, ERA5, Copernicus data telemetry
+│   │   ├── services/
+│   │   │   ├── api.js                  # Axios client for REST endpoints
+│   │   │   └── websocket.js            # Real-time WebSocket connection manager
+│   │   └── utils/
+│   │       └── formatters.js           # Coordinates, knots, distances, timestamps
+│
+└── implementation.md                   # Workspace implementation guide

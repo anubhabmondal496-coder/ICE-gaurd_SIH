@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Icebergs - ICEGUARD AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-surface": "#dce4e5",
+                      "on-tertiary-fixed": "#251a00",
+                      "inverse-surface": "#dce4e5",
+                      "on-error": "#690005",
+                      "on-primary-fixed-variant": "#004f58",
+                      "secondary-container": "#fd6c00",
+                      "risk-high": "#FF3D00",
+                      "secondary-fixed": "#ffdbcb",
+                      "on-secondary-fixed": "#341100",
+                      "on-tertiary-container": "#6f5500",
+                      "surface-container": "#192122",
+                      "error": "#ffb4ab",
+                      "secondary-fixed-dim": "#ffb692",
+                      "surface-bright": "#333a3c",
+                      "slate-gray": "#1C2533",
+                      "on-surface-variant": "#bac9cc",
+                      "tertiary-fixed-dim": "#f3bf26",
+                      "ice-white": "#F0F4F8",
+                      "surface-dim": "#0d1516",
+                      "tertiary-fixed": "#ffdf96",
+                      "secondary": "#ffb692",
+                      "inverse-on-surface": "#2a3233",
+                      "surface-tint": "#00daf3",
+                      "on-primary-container": "#00626e",
+                      "surface-container-low": "#151d1e",
+                      "outline-variant": "#3b494c",
+                      "primary-fixed-dim": "#00daf3",
+                      "surface-variant": "#2e3638",
+                      "risk-medium": "#FFC400",
+                      "on-primary": "#00363d",
+                      "surface-container-lowest": "#080f11",
+                      "tertiary-container": "#fec931",
+                      "primary-fixed": "#9cf0ff",
+                      "primary": "#c3f5ff",
+                      "on-secondary": "#562000",
+                      "on-error-container": "#ffdad6",
+                      "safety-orange": "#FF6D00",
+                      "on-background": "#dce4e5",
+                      "surface": "#0d1516",
+                      "surface-container-high": "#242b2d",
+                      "outline": "#849396",
+                      "neon-green": "#00E676",
+                      "on-tertiary": "#3e2e00",
+                      "on-primary-fixed": "#001f24",
+                      "risk-low": "#00E676",
+                      "primary-container": "#00e5ff",
+                      "on-secondary-fixed-variant": "#7a3000",
+                      "deep-ocean": "#0A121E",
+                      "surface-container-highest": "#2e3638",
+                      "error-container": "#93000a",
+                      "inverse-primary": "#006875",
+                      "on-tertiary-fixed-variant": "#594400",
+                      "background": "#0d1516",
+                      "tertiary": "#ffeac0",
+                      "on-secondary-container": "#562000"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "data-row-padding": "8px",
+                      "container-margin": "24px",
+                      "compact-padding": "4px",
+                      "panel-gap": "12px"
+              },
+              "fontFamily": {
+                      "data-display": ["JetBrains Mono"],
+                      "body-lg": ["Inter"],
+                      "body-md": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "label-caps": ["JetBrains Mono"],
+                      "headline-lg": ["Inter"],
+                      "headline-sm": ["Inter"],
+                      "headline-lg-mobile": ["Inter"]
+              },
+              "fontSize": {
+                      "data-display": ["18px", {"lineHeight": "24px", "fontWeight": "500"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(35, 45, 59, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .glow-active {
+            box-shadow: 0 0 8px 1px var(--tw-colors-primary);
+        }
+        /* Custom scrollbar for terminal vibe */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: theme('colors.deep-ocean'); 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: theme('colors.outline-variant'); 
+            border-radius: theme('borderRadius.DEFAULT');
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: theme('colors.primary'); 
+        }
+    </style>
+</head>
+<body class="bg-deep-ocean text-on-surface font-body-md h-screen w-screen overflow-hidden flex selection:bg-primary-container selection:text-on-primary-container">
+<!-- SideNavBar (Shared Component) -->
+<nav class="hidden md:flex flex-col h-full left-0 w-64 bg-surface-container border-r border-outline-variant p-panel-gap flex-shrink-0">
+<!-- Header -->
+<div class="mb-8">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-10 h-10 rounded-full bg-slate-gray overflow-hidden border border-outline-variant">
+<img alt="Vessel Operator Profile" class="w-full h-full object-cover" data-alt="A macro shot of an advanced optical sensor lens reflecting a dark antarctic ocean, deep blues and cyans, high tech corporate aesthetic, soft cinematic lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4tJRBVOuoO1NYG956d5UYh_V_T8E7rGniZOYoaq02DEkW4PX7B74dP3ce4XR1dmoRZWG0bluH634qdLHlWY4psX60dGOAl70GDRaCTwOqUeLxGBPj1ml1ctfrnCl9hyJHWKFmQJD-zmvLHe9h5glooCrYMdYYgx56yl4s4qky9U6ppG9KHMUMuBvJfdjQAlKrGO5KPrC-JkIQ3aqI8v1DYz9HwcUY_j8k5JLMoFM7DsOtDSG3Jxse"/>
+</div>
+<div>
+<h1 class="font-headline-sm text-headline-sm font-black text-on-surface">ICEGUARD AI</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Antarctic Navigation</p>
+</div>
+</div>
+<button class="w-full mt-4 border border-primary text-primary hover:bg-primary/10 font-label-caps text-label-caps py-2 rounded uppercase transition-colors duration-200">
+                ANALYZE TRAJECTORY
+            </button>
+</div>
+<!-- Main Nav Links -->
+<div class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant rounded-lg hover:bg-surface-bright transition-all duration-150 active:scale-98" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="font-label-caps text-label-caps">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-secondary-container text-on-secondary-container rounded-lg font-bold hover:bg-surface-bright transition-all duration-150 active:scale-98" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">ac_unit</span>
+<span class="font-label-caps text-label-caps">Icebergs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant rounded-lg hover:bg-surface-bright transition-all duration-150 active:scale-98" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">query_stats</span>
+<span class="font-label-caps text-label-caps">Prediction</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant rounded-lg hover:bg-surface-bright transition-all duration-150 active:scale-98" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">map</span>
+<span class="font-label-caps text-label-caps">Risk Map</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant rounded-lg hover:bg-surface-bright transition-all duration-150 active:scale-98" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">directions_boat</span>
+<span class="font-label-caps text-label-caps">Route Planner</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant rounded-lg hover:bg-surface-bright transition-all duration-150 active:scale-98" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">database</span>
+<span class="font-label-caps text-label-caps">Data Sources</span>
+</a>
+</div>
+<!-- Footer Nav Links -->
+<div class="mt-auto space-y-1 pt-4 border-t border-outline-variant">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant rounded-lg hover:bg-surface-bright transition-all duration-150 active:scale-98" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+<span class="font-label-caps text-label-caps">System Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant rounded-lg hover:bg-surface-bright transition-all duration-150 active:scale-98" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">help</span>
+<span class="font-label-caps text-label-caps">Support</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col min-w-0 bg-deep-ocean relative z-0">
+<!-- Abstract Background representation of map underneath -->
+<div class="absolute inset-0 z-[-1] opacity-20 pointer-events-none" style="background-image: radial-gradient(theme('colors.slate-gray') 1px, transparent 1px); background-size: 24px 24px;"></div>
+<!-- Header Actions -->
+<header class="h-16 flex-shrink-0 border-b border-outline-variant bg-slate-gray/50 backdrop-blur-md flex items-center justify-between px-container-margin">
+<div class="flex items-center gap-4 w-full max-w-2xl">
+<!-- Search -->
+<div class="relative w-full max-w-sm">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" style="font-variation-settings: 'FILL' 0;">search</span>
+<input class="w-full bg-surface border border-outline-variant rounded pl-10 pr-4 py-1.5 text-on-surface font-data-display text-data-display placeholder:text-on-surface-variant focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-sm" placeholder="Search Iceberg ID..." type="text"/>
+</div>
+<!-- Filters -->
+<div class="flex items-center gap-2">
+<select class="bg-surface border border-outline-variant rounded px-3 py-1.5 text-on-surface font-label-caps text-label-caps focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none cursor-pointer">
+<option>Sort by Risk</option>
+<option>Highest Risk First</option>
+<option>Lowest Risk First</option>
+<option>Recently Updated</option>
+</select>
+<select class="bg-surface border border-outline-variant rounded px-3 py-1.5 text-on-surface font-label-caps text-label-caps focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none cursor-pointer">
+<option>Filter by Region</option>
+<option>Weddell Sea</option>
+<option>Ross Sea</option>
+<option>Amundsen Sea</option>
+</select>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-neon-green animate-pulse"></div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">LIVE SYNC</span>
+</div>
+<span class="font-data-display text-[12px] text-on-surface-variant">09:42 UTC</span>
+</div>
+</header>
+<!-- Content Grid -->
+<div class="flex-1 overflow-hidden p-container-margin flex gap-container-margin">
+<!-- Left: Table Area (2/3 width) -->
+<div class="flex-1 flex flex-col bg-slate-gray border border-outline-variant rounded-lg overflow-hidden glass-panel">
+<div class="px-4 py-3 border-b border-outline-variant bg-surface-container-high flex justify-between items-center">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Tracked Entities</h2>
+<span class="font-label-caps text-label-caps text-on-surface-variant">45 Active</span>
+</div>
+<div class="flex-1 overflow-auto">
+<table class="w-full text-left border-collapse">
+<thead class="sticky top-0 bg-surface-container-high border-b border-outline-variant z-10">
+<tr>
+<th class="py-3 px-4 font-label-caps text-label-caps text-on-surface-variant">ID</th>
+<th class="py-3 px-4 font-label-caps text-label-caps text-on-surface-variant">Lat/Long</th>
+<th class="py-3 px-4 font-label-caps text-label-caps text-on-surface-variant">Velocity</th>
+<th class="py-3 px-4 font-label-caps text-label-caps text-on-surface-variant">Dir</th>
+<th class="py-3 px-4 font-label-caps text-label-caps text-on-surface-variant">Size (km²)</th>
+<th class="py-3 px-4 font-label-caps text-label-caps text-on-surface-variant">Risk</th>
+<th class="py-3 px-4 font-label-caps text-label-caps text-on-surface-variant text-right">Last Updated</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant font-data-display text-[13px]">
+<!-- Row 1: Selected -->
+<tr class="bg-primary/10 cursor-pointer hover:bg-surface-bright transition-colors">
+<td class="py-data-row-padding px-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">landscape</span>
+<span class="text-primary font-bold">A76C</span>
+</td>
+<td class="py-data-row-padding px-4 text-on-surface">-64.23°, 45.72°</td>
+<td class="py-data-row-padding px-4 text-on-surface">0.21 m/s</td>
+<td class="py-data-row-padding px-4 text-on-surface">37°</td>
+<td class="py-data-row-padding px-4 text-on-surface">1,240</td>
+<td class="py-data-row-padding px-4">
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded border border-risk-medium text-risk-medium bg-risk-medium/10">
+<div class="w-1.5 h-1.5 rounded-full bg-risk-medium"></div>
+<span class="font-label-caps text-[10px]">MEDIUM</span>
+</div>
+</td>
+<td class="py-data-row-padding px-4 text-right text-on-surface-variant">2m ago</td>
+</tr>
+<!-- Row 2 -->
+<tr class="cursor-pointer hover:bg-surface-bright transition-colors">
+<td class="py-data-row-padding px-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-sm" style="font-variation-settings: 'FILL' 1;">landscape</span>
+<span class="text-on-surface">A23A</span>
+</td>
+<td class="py-data-row-padding px-4 text-on-surface">-61.45°, 42.11°</td>
+<td class="py-data-row-padding px-4 text-on-surface">0.15 m/s</td>
+<td class="py-data-row-padding px-4 text-on-surface">45°</td>
+<td class="py-data-row-padding px-4 text-on-surface">3,900</td>
+<td class="py-data-row-padding px-4">
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded border border-risk-low text-risk-low bg-risk-low/10">
+<div class="w-1.5 h-1.5 rounded-full bg-risk-low"></div>
+<span class="font-label-caps text-[10px]">LOW</span>
+</div>
+</td>
+<td class="py-data-row-padding px-4 text-right text-on-surface-variant">15m ago</td>
+</tr>
+<!-- Row 3 -->
+<tr class="cursor-pointer hover:bg-surface-bright transition-colors">
+<td class="py-data-row-padding px-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-sm" style="font-variation-settings: 'FILL' 1;">landscape</span>
+<span class="text-on-surface">B15T</span>
+</td>
+<td class="py-data-row-padding px-4 text-on-surface">-68.91°, -12.34°</td>
+<td class="py-data-row-padding px-4 text-on-surface">0.32 m/s</td>
+<td class="py-data-row-padding px-4 text-on-surface">112°</td>
+<td class="py-data-row-padding px-4 text-on-surface">850</td>
+<td class="py-data-row-padding px-4">
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded border border-risk-high text-risk-high bg-risk-high/10">
+<div class="w-1.5 h-1.5 rounded-full bg-risk-high animate-pulse"></div>
+<span class="font-label-caps text-[10px]">HIGH</span>
+</div>
+</td>
+<td class="py-data-row-padding px-4 text-right text-on-surface-variant">1m ago</td>
+</tr>
+<!-- Generated Rows to fill -->
+<tr class="cursor-pointer hover:bg-surface-bright transition-colors">
+<td class="py-data-row-padding px-4 flex items-center gap-2"><span class="material-symbols-outlined text-on-surface-variant text-sm">landscape</span><span class="text-on-surface">D28</span></td>
+<td class="py-data-row-padding px-4 text-on-surface">-66.12°, 73.44°</td>
+<td class="py-data-row-padding px-4 text-on-surface">0.11 m/s</td>
+<td class="py-data-row-padding px-4 text-on-surface">265°</td>
+<td class="py-data-row-padding px-4 text-on-surface">1,630</td>
+<td class="py-data-row-padding px-4"><div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded border border-risk-low text-risk-low bg-risk-low/10"><div class="w-1.5 h-1.5 rounded-full bg-risk-low"></div><span class="font-label-caps text-[10px]">LOW</span></div></td>
+<td class="py-data-row-padding px-4 text-right text-on-surface-variant">45m ago</td>
+</tr>
+<tr class="cursor-pointer hover:bg-surface-bright transition-colors">
+<td class="py-data-row-padding px-4 flex items-center gap-2"><span class="material-symbols-outlined text-on-surface-variant text-sm">landscape</span><span class="text-on-surface">C38</span></td>
+<td class="py-data-row-padding px-4 text-on-surface">-74.33°, 132.11°</td>
+<td class="py-data-row-padding px-4 text-on-surface">0.18 m/s</td>
+<td class="py-data-row-padding px-4 text-on-surface">90°</td>
+<td class="py-data-row-padding px-4 text-on-surface">420</td>
+<td class="py-data-row-padding px-4"><div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded border border-risk-medium text-risk-medium bg-risk-medium/10"><div class="w-1.5 h-1.5 rounded-full bg-risk-medium"></div><span class="font-label-caps text-[10px]">MEDIUM</span></div></td>
+<td class="py-data-row-padding px-4 text-right text-on-surface-variant">12m ago</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Right: Details Panel (1/3 width) for Selected Iceberg A76C -->
+<div class="w-80 lg:w-96 flex-shrink-0 flex flex-col gap-panel-gap overflow-y-auto">
+<!-- Identity Card -->
+<div class="bg-slate-gray border border-outline-variant rounded-lg p-4 glass-panel glow-active relative overflow-hidden">
+<div class="absolute top-0 right-0 bg-risk-medium text-surface-container-lowest font-label-caps text-[10px] px-3 py-1 rounded-bl-lg font-bold">
+                        MEDIUM RISK
+                    </div>
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">ac_unit</span>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface m-0 leading-none">A76C</h3>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-1">Weddell Sea Sector</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-y-3 gap-x-4 border-t border-outline-variant pt-3">
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-1">Position</p>
+<p class="font-data-display text-[14px] text-on-surface">-64.23°, 45.72°</p>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-1">Velocity</p>
+<p class="font-data-display text-[14px] text-on-surface">0.21 m/s</p>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-1">Direction</p>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-on-surface-variant text-sm rotate-[37deg]">north</span>
+<p class="font-data-display text-[14px] text-on-surface">37°</p>
+</div>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-1">Est. Size</p>
+<p class="font-data-display text-[14px] text-on-surface">1,240 km²</p>
+</div>
+</div>
+</div>
+<!-- Prediction Card -->
+<div class="bg-slate-gray border border-outline-variant rounded-lg p-4 glass-panel flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<h4 class="font-headline-sm text-[16px] text-on-surface font-semibold">Trajectory Prediction</h4>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-sm">memory</span>
+<span class="font-label-caps text-label-caps text-primary">XGBoost</span>
+</div>
+</div>
+<div class="bg-surface border border-outline-variant rounded p-3 relative overflow-hidden">
+<!-- Abstract trajectory line -->
+<div class="absolute inset-x-4 top-1/2 h-[2px] bg-outline-variant -translate-y-1/2 z-0"></div>
+<div class="absolute inset-x-4 top-1/2 h-[2px] bg-primary/40 -translate-y-1/2 z-0 w-2/3 border-r border-primary border-dashed"></div>
+<div class="relative z-10 flex justify-between items-center px-2">
+<div class="flex flex-col items-center">
+<div class="w-3 h-3 rounded-full bg-primary mb-1 border-2 border-surface"></div>
+<span class="font-label-caps text-[10px] text-on-surface">NOW</span>
+<span class="font-data-display text-[10px] text-on-surface-variant mt-0.5">0 km</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-2.5 h-2.5 rounded-full bg-outline-variant mb-1 border-2 border-surface"></div>
+<span class="font-label-caps text-[10px] text-on-surface-variant">6H</span>
+<span class="font-data-display text-[10px] text-primary mt-0.5">+12 km</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-2.5 h-2.5 rounded-full bg-outline-variant mb-1 border-2 border-surface"></div>
+<span class="font-label-caps text-[10px] text-on-surface-variant">12H</span>
+<span class="font-data-display text-[10px] text-primary mt-0.5">+24 km</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-2.5 h-2.5 rounded-full bg-outline-variant mb-1 border-2 border-surface"></div>
+<span class="font-label-caps text-[10px] text-on-surface-variant">24H</span>
+<span class="font-data-display text-[10px] text-primary mt-0.5">+48 km</span>
+</div>
+</div>
+</div>
+<div class="flex justify-between items-end border-t border-outline-variant pt-3">
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-1">Model Confidence</p>
+<p class="font-data-display text-data-display text-primary">87%</p>
+</div>
+<div class="text-right">
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-1">Pos. Error</p>
+<p class="font-data-display text-[14px] text-on-surface">±2.4 km</p>
+</div>
+</div>
+</div>
+<!-- Environment Context (Bento style mini cards) -->
+<div class="grid grid-cols-2 gap-panel-gap">
+<div class="bg-slate-gray border border-outline-variant rounded-lg p-3 glass-panel">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Current</span>
+<span class="material-symbols-outlined text-surface-tint text-sm">water</span>
+</div>
+<p class="font-data-display text-[16px] text-on-surface">0.32 m/s</p>
+<p class="font-data-display text-[12px] text-on-surface-variant flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[14px] rotate-[37deg]">north</span> 37°
+                        </p>
+</div>
+<div class="bg-slate-gray border border-outline-variant rounded-lg p-3 glass-panel">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Wind</span>
+<span class="material-symbols-outlined text-surface-tint text-sm">air</span>
+</div>
+<p class="font-data-display text-[16px] text-on-surface">7.2 m/s</p>
+<p class="font-data-display text-[12px] text-on-surface-variant flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[14px] rotate-[41deg]">north</span> 41°
+                        </p>
+</div>
+</div>
+<!-- Map Action -->
+<button class="w-full bg-primary-container text-on-primary-container hover:bg-primary transition-colors font-label-caps text-label-caps py-3 rounded-lg flex justify-center items-center gap-2 uppercase tracking-widest mt-auto">
+<span class="material-symbols-outlined text-sm">my_location</span>
+                    FOCUS ON MAP
+                </button>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Route Planner - ICEGUARD AI</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#dce4e5",
+                        "on-tertiary-fixed": "#251a00",
+                        "inverse-surface": "#dce4e5",
+                        "on-error": "#690005",
+                        "on-primary-fixed-variant": "#004f58",
+                        "secondary-container": "#fd6c00",
+                        "risk-high": "#FF3D00",
+                        "secondary-fixed": "#ffdbcb",
+                        "on-secondary-fixed": "#341100",
+                        "on-tertiary-container": "#6f5500",
+                        "surface-container": "#192122",
+                        "error": "#ffb4ab",
+                        "secondary-fixed-dim": "#ffb692",
+                        "surface-bright": "#333a3c",
+                        "slate-gray": "#1C2533",
+                        "on-surface-variant": "#bac9cc",
+                        "tertiary-fixed-dim": "#f3bf26",
+                        "ice-white": "#F0F4F8",
+                        "surface-dim": "#0d1516",
+                        "tertiary-fixed": "#ffdf96",
+                        "secondary": "#ffb692",
+                        "inverse-on-surface": "#2a3233",
+                        "surface-tint": "#00daf3",
+                        "on-primary-container": "#00626e",
+                        "surface-container-low": "#151d1e",
+                        "outline-variant": "#3b494c",
+                        "primary-fixed-dim": "#00daf3",
+                        "surface-variant": "#2e3638",
+                        "risk-medium": "#FFC400",
+                        "on-primary": "#00363d",
+                        "surface-container-lowest": "#080f11",
+                        "tertiary-container": "#fec931",
+                        "primary-fixed": "#9cf0ff",
+                        "primary": "#c3f5ff",
+                        "on-secondary": "#562000",
+                        "on-error-container": "#ffdad6",
+                        "safety-orange": "#FF6D00",
+                        "on-background": "#dce4e5",
+                        "surface": "#0d1516",
+                        "surface-container-high": "#242b2d",
+                        "outline": "#849396",
+                        "neon-green": "#00E676",
+                        "on-tertiary": "#3e2e00",
+                        "on-primary-fixed": "#001f24",
+                        "risk-low": "#00E676",
+                        "primary-container": "#00e5ff",
+                        "on-secondary-fixed-variant": "#7a3000",
+                        "deep-ocean": "#0A121E",
+                        "surface-container-highest": "#2e3638",
+                        "error-container": "#93000a",
+                        "inverse-primary": "#006875",
+                        "on-tertiary-fixed-variant": "#594400",
+                        "background": "#0d1516",
+                        "tertiary": "#ffeac0",
+                        "on-secondary-container": "#562000"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "data-row-padding": "8px",
+                        "container-margin": "24px",
+                        "compact-padding": "4px",
+                        "panel-gap": "12px"
+                    },
+                    "fontFamily": {
+                        "data-display": ["JetBrains Mono"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-lg": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-lg-mobile": ["Inter"]
+                    },
+                    "fontSize": {
+                        "data-display": ["18px", { "lineHeight": "24px", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md h-screen w-screen overflow-hidden flex selection:bg-primary selection:text-on-primary">
+<!-- Shared Component: SideNavBar -->
+<nav class="bg-surface-container dark:bg-surface-container docked h-full left-0 w-64 border-r border-outline-variant flat no shadows flex flex-col p-panel-gap z-20 shrink-0">
+<!-- Header -->
+<div class="flex items-center gap-3 mb-8 px-2 mt-4">
+<div class="w-10 h-10 rounded bg-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">sailing</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm font-black text-on-surface">ICEGUARD AI</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">Antarctic Navigation</div>
+</div>
+</div>
+<!-- Main Navigation Tabs -->
+<div class="flex flex-col gap-1 flex-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant rounded-lg hover:bg-surface-bright transition-all duration-150 active:scale-98" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant rounded-lg hover:bg-surface-bright transition-all duration-150 active:scale-98" href="#">
+<span class="material-symbols-outlined">ac_unit</span>
+<span class="font-body-md text-body-md">Icebergs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant rounded-lg hover:bg-surface-bright transition-all duration-150 active:scale-98" href="#">
+<span class="material-symbols-outlined">query_stats</span>
+<span class="font-body-md text-body-md">Prediction</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant rounded-lg hover:bg-surface-bright transition-all duration-150 active:scale-98" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-body-md text-body-md">Risk Map</span>
+</a>
+<!-- Active Tab: Route Planner -->
+<a class="flex items-center gap-3 px-3 py-2 bg-secondary-container text-on-secondary-container rounded-lg font-bold hover:bg-surface-bright transition-all duration-150 active:scale-98" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">directions_boat</span>
+<span class="font-body-md text-body-md">Route Planner</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant rounded-lg hover:bg-surface-bright transition-all duration-150 active:scale-98" href="#">
+<span class="material-symbols-outlined">database</span>
+<span class="font-body-md text-body-md">Data Sources</span>
+</a>
+</div>
+<!-- CTA -->
+<div class="mt-auto mb-4">
+<button class="w-full border border-primary text-primary dark:text-primary-fixed-dim hover:bg-primary/10 py-2 rounded font-label-caps text-label-caps transition-colors duration-150 active:scale-98">
+                ANALYZE TRAJECTORY
+            </button>
+</div>
+<!-- Footer Tabs -->
+<div class="flex flex-col gap-1 border-t border-outline-variant pt-4">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant rounded-lg hover:bg-surface-bright transition-all duration-150 active:scale-98" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-caps text-label-caps">System Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant rounded-lg hover:bg-surface-bright transition-all duration-150 active:scale-98" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-caps text-label-caps">Support</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area: Split Screen -->
+<main class="flex-1 flex overflow-hidden">
+<!-- Left Panel: Analysis & Configuration -->
+<aside class="w-[420px] bg-surface border-r border-outline-variant flex flex-col overflow-y-auto shrink-0 relative z-10 shadow-2xl shadow-black/50">
+<!-- Header -->
+<div class="p-container-margin border-b border-outline-variant">
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-2">Route Analysis</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Configure parameters to generate an optimized, iceberg-aware navigational path.</p>
+</div>
+<div class="p-container-margin flex flex-col gap-container-margin flex-1">
+<!-- Input Parameters Card -->
+<div class="bg-surface-container-low border border-outline-variant rounded-lg p-4">
+<h2 class="font-label-caps text-label-caps text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">tune</span> PARAMETERS
+                    </h2>
+<div class="flex flex-col gap-4">
+<!-- Start Input -->
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-1">START (VESSEL POSITION)</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">my_location</span>
+<input class="w-full bg-surface border border-outline-variant rounded pl-10 pr-3 py-2 font-data-display text-[14px] text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" readonly="" type="text" value="INS Explorer (69.82° S, 11.21° E)"/>
+</div>
+</div>
+<!-- Destination Input -->
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-1">DESTINATION (WAYPOINT)</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">location_on</span>
+<select class="w-full bg-surface border border-outline-variant rounded pl-10 pr-3 py-2 font-data-display text-[14px] text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors appearance-none">
+<option>Maitri Coastal Region</option>
+<option>McMurdo Station Port</option>
+<option>Custom Coordinates...</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none">arrow_drop_down</span>
+</div>
+</div>
+<!-- Departure Time -->
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-1">DEPARTURE TIME</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">schedule</span>
+<input class="w-full bg-surface border border-outline-variant rounded pl-10 pr-3 py-2 font-data-display text-[14px] text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors [color-scheme:dark]" type="datetime-local" value="2026-10-24T18:00"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Analysis Results Section (Simulated Active State) -->
+<div>
+<h2 class="font-label-caps text-label-caps text-on-surface-variant mb-3">ROUTE COMPARISON</h2>
+<div class="flex flex-col gap-3">
+<!-- Original Route -->
+<div class="border border-risk-high bg-risk-high/5 rounded-lg p-4 relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-risk-high"></div>
+<div class="flex justify-between items-start mb-2">
+<span class="font-headline-sm text-headline-sm text-on-surface">Original Route</span>
+<span class="px-2 py-0.5 bg-risk-high/20 text-risk-high font-label-caps text-label-caps rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">warning</span> HIGH RISK
+                                </span>
+</div>
+<div class="grid grid-cols-2 gap-4 mt-3">
+<div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">DISTANCE</div>
+<div class="font-data-display text-data-display">820 <span class="text-[12px] text-on-surface-variant">km</span></div>
+</div>
+<div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">COLLISION PROB.</div>
+<div class="font-data-display text-data-display text-risk-high">18%</div>
+</div>
+</div>
+</div>
+<!-- Optimized Route -->
+<div class="border-2 border-risk-low bg-surface-container-high rounded-lg p-4 relative overflow-hidden shadow-[0_0_15px_rgba(0,230,118,0.15)]">
+<div class="absolute top-2 right-2 text-risk-low">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex justify-between items-start mb-2">
+<span class="font-headline-sm text-headline-sm text-risk-low">Alternative A</span>
+<span class="font-label-caps text-label-caps text-primary bg-primary/10 px-2 py-0.5 rounded">RECOMMENDED</span>
+</div>
+<div class="grid grid-cols-2 gap-4 mt-3">
+<div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">DISTANCE</div>
+<div class="font-data-display text-data-display">845 <span class="text-[12px] text-on-surface-variant">km</span></div>
+</div>
+<div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">COLLISION PROB.</div>
+<div class="font-data-display text-data-display text-risk-low">1.2%</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Key Metrics Bento -->
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-surface-container border border-outline-variant rounded-lg p-3 flex flex-col justify-center items-center text-center">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1">RISK REDUCTION</span>
+<span class="font-headline-lg text-headline-lg text-primary">64%</span>
+</div>
+<div class="bg-surface-container border border-outline-variant rounded-lg p-3 flex flex-col justify-center items-center text-center">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1">SAFETY SCORE</span>
+<div class="w-full bg-surface border border-outline-variant rounded-full h-2 mt-2 overflow-hidden">
+<div class="bg-risk-low h-full w-[92%]"></div>
+</div>
+<span class="font-data-display text-[12px] mt-1 text-risk-low">92/100</span>
+</div>
+</div>
+</div>
+<!-- Sticky Action Footer -->
+<div class="p-4 border-t border-outline-variant bg-surface-container-low mt-auto">
+<button class="w-full bg-primary hover:bg-primary-fixed hover:shadow-[0_0_20px_rgba(195,245,255,0.4)] text-on-primary py-3 rounded-lg font-headline-sm text-headline-sm flex items-center justify-center gap-2 transition-all duration-200 active:scale-95">
+<span class="material-symbols-outlined">route</span>
+                    APPLY RECOMMENDED ROUTE
+                </button>
+</div>
+</aside>
+<!-- Right Panel: Map Visualization Viewport -->
+<section class="flex-1 relative bg-deep-ocean overflow-hidden" data-location="Antarctica">
+<!-- Map Base Layer (Simulated via styled div and placeholder image for context) -->
+<div class="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-screen" data-alt="A highly detailed, top-down dark mode topographical map of the Antarctic coastline and surrounding ocean. The style is a minimalist, professional military or maritime command interface. The ocean is rendered in deep, inky blues and blacks (#0A121E), while the ice shelves and landmasses are delineated with sharp, thin cyan grid lines and subtle icy white contours. The lighting is completely flat and technical, with no soft gradients, creating a sterile, high-tech aesthetic suitable for critical decision-making." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBthh5gPHe69SOfWSOg03nDeHk0sAYCgmvSo445g_NOEZZwMCJ3k4OLZqMY-Wu-44f7XtgUKQkiWHTAcM6jeb9vCbDa1XKoFoFwkVtZXhNVEqArMCzJ0MfmirSkhOW1E5DligooqPqY2GMyvZxoO1cRYvTlBhZplExeG7SS0A7NLmj8uocdPIZM2FKskpN9I1cE7M1mqemtizlTBioguFo1J5tHjEY-BhRCnVB31H0mogp8nymEupQP')">
+</div>
+<!-- Map Grid Overlay (Technical Aesthetic) -->
+<div class="absolute inset-0 pointer-events-none" style="background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 50px 50px;"></div>
+<!-- Map UI Controls -->
+<div class="absolute top-container-margin right-container-margin flex flex-col gap-2 z-10">
+<button class="w-10 h-10 bg-surface-container border border-outline-variant rounded flex items-center justify-center text-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="w-10 h-10 bg-surface-container border border-outline-variant rounded flex items-center justify-center text-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<button class="w-10 h-10 bg-surface-container border border-outline-variant rounded flex items-center justify-center text-on-surface hover:text-primary transition-colors mt-4">
+<span class="material-symbols-outlined">my_location</span>
+</button>
+</div>
+<!-- Map Legend -->
+<div class="absolute bottom-container-margin right-container-margin bg-surface-container/90 backdrop-blur border border-outline-variant rounded-lg p-4 z-10 w-64">
+<h3 class="font-label-caps text-label-caps text-on-surface mb-3">MAP LEGEND</h3>
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<div class="w-4 h-0.5 border-t-2 border-dashed border-risk-high"></div>
+<span class="font-body-md text-[12px] text-on-surface-variant">Original Route (High Risk)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-4 h-0.5 bg-risk-low"></div>
+<span class="font-body-md text-[12px] text-on-surface-variant">Recommended Route</span>
+</div>
+<div class="flex items-center gap-2 mt-1">
+<div class="w-3 h-3 rounded-full bg-risk-high/30 border border-risk-high flex items-center justify-center"><div class="w-1 h-1 bg-risk-high rounded-full"></div></div>
+<span class="font-body-md text-[12px] text-on-surface-variant">Iceberg Prediction Zone</span>
+</div>
+</div>
+</div>
+<!-- SVG Data Layer (Routes & Zones) -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none" preserveaspectratio="xMidYMid slice" viewbox="0 0 1000 800">
+<!-- Risk Zones (Radial Gradients to simulate uncertainty areas) -->
+<defs>
+<radialgradient cx="50%" cy="50%" id="risk-zone-1" r="50%">
+<stop offset="0%" stop-color="#FF3D00" stop-opacity="0.4"></stop>
+<stop offset="100%" stop-color="#FF3D00" stop-opacity="0"></stop>
+</radialgradient>
+<radialgradient cx="50%" cy="50%" id="risk-zone-2" r="50%">
+<stop offset="0%" stop-color="#FFC400" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#FFC400" stop-opacity="0"></stop>
+</radialgradient>
+<!-- Glow effect for recommended path -->
+<filter height="140%" id="glow" width="140%" x="-20%" y="-20%">
+<fegaussianblur result="blur" stddeviation="4"></fegaussianblur>
+<fecomposite in="SourceGraphic" in2="blur" operator="over"></fecomposite>
+</filter>
+</defs>
+<!-- Iceberg Danger Areas -->
+<circle cx="600" cy="350" fill="url(#risk-zone-1)" r="120"></circle>
+<circle cx="600" cy="350" fill="none" r="40" stroke="#FF3D00" stroke-dasharray="4 4" stroke-width="1"></circle>
+<circle cx="350" cy="500" fill="url(#risk-zone-2)" r="90"></circle>
+<!-- Original Route (Red, Dashed, High Risk) -->
+<path d="M 150 700 Q 300 650, 450 500 T 650 350 T 850 150" fill="none" opacity="0.8" stroke="#FF3D00" stroke-dasharray="8 6" stroke-width="3"></path>
+<!-- Collision Intersection Marker -->
+<circle cx="585" cy="390" fill="#FF3D00" r="6"></circle>
+<circle class="animate-ping" cx="585" cy="390" fill="none" r="12" stroke="#FF3D00" stroke-width="1" style="animation-duration: 2s;"></circle>
+<!-- Recommended Route (Green, Solid, Glow) -->
+<path d="M 150 700 Q 250 500, 400 350 T 600 150 T 850 150" fill="none" filter="url(#glow)" stroke="#00E676" stroke-width="4"></path>
+<!-- Waypoints on Recommended Route -->
+<circle cx="400" cy="350" fill="#0d1516" r="4" stroke="#00E676" stroke-width="2"></circle>
+<circle cx="600" cy="150" fill="#0d1516" r="4" stroke="#00E676" stroke-width="2"></circle>
+</svg>
+<!-- HTML Overlays for Markers (for exact positioning of icons) -->
+<!-- Vessel Start -->
+<div class="absolute flex flex-col items-center justify-center transform -translate-x-1/2 -translate-y-1/2 z-10" style="left: 15%; top: 87.5%; /* Maps roughly to 150, 700 in SVG */">
+<div class="w-8 h-8 bg-primary/20 border-2 border-primary rounded-full flex items-center justify-center mb-1 backdrop-blur">
+<span class="material-symbols-outlined text-primary text-[18px]" style="transform: rotate(45deg); font-variation-settings: 'FILL' 1;">navigation</span>
+</div>
+<div class="bg-surface-container border border-outline-variant px-2 py-1 rounded shadow-lg">
+<span class="font-data-display text-[10px] text-on-surface whitespace-nowrap">INS EXPLORER</span>
+</div>
+</div>
+<!-- Destination Waypoint -->
+<div class="absolute flex flex-col items-center justify-center transform -translate-x-1/2 -translate-y-1/2 z-10" style="left: 85%; top: 18.75%; /* Maps roughly to 850, 150 in SVG */">
+<div class="w-8 h-8 bg-surface-variant border-2 border-on-surface-variant rounded-full flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-on-surface text-[18px]">flag</span>
+</div>
+<div class="bg-surface-container border border-outline-variant px-2 py-1 rounded shadow-lg">
+<span class="font-data-display text-[10px] text-on-surface whitespace-nowrap">MAITRI COASTAL</span>
+</div>
+</div>
+<!-- Iceberg Label -->
+<div class="absolute flex flex-col items-center justify-center transform -translate-x-1/2 -translate-y-1/2 z-10" style="left: 60%; top: 43.75%; /* Maps to 600, 350 */">
+<div class="w-6 h-6 bg-risk-high/20 border border-risk-high rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-risk-high text-[14px]">ac_unit</span>
+</div>
+<span class="font-label-caps text-label-caps text-risk-high mt-1 bg-surface/80 px-1 rounded">A76C</span>
+</div>
+</section>
+</main>
+</body></html>

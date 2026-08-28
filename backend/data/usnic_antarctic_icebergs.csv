@@ -1,0 +1,7 @@
+iceberg_id,name,latitude,longitude,size_category,length_km,width_km,area_sq_km,thickness_m,mass_megatons,drift_speed_knots,drift_heading_deg,risk_level,source,calving_origin,last_updated,historical_track_json
+A76C,Iceberg A-76C,-64.2300,45.7200,Mega,17.5,8.2,143.5,220.0,28400.0,0.25,37.0,HIGH,USNIC / Sentinel-1 SAR,Ronne Ice Shelf,2026-08-28 09:30 UTC,"[[-64.75,44.90],[-64.62,45.12],[-64.48,45.35],[-64.35,45.52],[-64.23,45.72]]"
+A23A,Iceberg A-23A,-60.8500,-48.3000,Mega,68.0,42.0,2856.0,310.0,796000.0,0.38,42.0,CRITICAL,USNIC / MODIS Aqua,Filchner-Ronne Ice Shelf,2026-08-28 08:45 UTC,"[[-61.40,-49.10],[-61.25,-48.90],[-61.10,-48.70],[-60.98,-48.50],[-60.85,-48.30]]"
+D28,Iceberg D-28,-65.1000,78.4000,Large,32.0,14.5,464.0,210.0,87600.0,0.18,285.0,MEDIUM,Sentinel-1 SAR / NIC,Amery Ice Shelf,2026-08-28 09:15 UTC,"[[-65.50,79.20],[-65.30,78.80],[-65.10,78.40]]"
+B15Y,Iceberg B-15Y (Remnant),-63.4500,12.8000,Medium,8.4,4.1,34.4,160.0,4950.0,0.45,340.0,HIGH,USNIC / RADARSAT,Ross Ice Shelf,2026-08-28 09:00 UTC,"[[-63.95,13.50],[-63.70,13.15],[-63.45,12.80]]"
+C19C,Iceberg C-19C,-66.8000,142.2000,Medium,11.2,5.8,65.0,190.0,11100.0,0.08,260.0,LOW,Sentinel-1 SAR,Ross Ice Shelf,2026-08-28 07:30 UTC,"[[-66.82,142.25],[-66.80,142.20]]"
+A74B,Iceberg A-74B,-74.9000,-26.5000,Large,24.0,12.0,288.0,240.0,62200.0,0.05,210.0,LOW,USNIC / Landsat-9,Brunt Ice Shelf,2026-08-28 08:00 UTC,"[[-74.92,-26.55],[-74.90,-26.50]]"
